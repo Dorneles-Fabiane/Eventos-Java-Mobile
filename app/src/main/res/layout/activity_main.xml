@@ -17,15 +17,17 @@
         android:textSize="18sp" />
 
     <ListView
+        android:id="@+id/listView_eventos"
         android:layout_width="match_parent"
         android:layout_height="380dp" />
 
     <Button
-        android:id="@+id/btn_novoEvento"
+        android:id="@+id/btn_novo_evento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#5B1AC3"
         android:fontFamily="sans-serif-black"
+        android:onClick="onClickNovoEvento"
         android:text="+  novo evento"
         android:textAlignment="center"
         android:textColor="#FFFFFF" />
