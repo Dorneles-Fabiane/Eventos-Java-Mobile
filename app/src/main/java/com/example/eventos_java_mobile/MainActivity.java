@@ -4,6 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +42,40 @@ public class MainActivity extends AppCompatActivity {
 
         definirOnClickListenerListView();
 
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        definirOnClickListenerListView();
+
+        listViewEventos.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                contextMenu.add(Menu.NONE, 1, Menu.NONE, "Deletar");
+            }
+        });
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)
+                item.getMenuInfo();
+        int posicaoClicada = menuInfo.position;
+
+        switch (item.getItemId()) {
+            case 1: {
+                removeEventoNa(posicaoClicada);
+                break;
+            }
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+    private void removeEventoNa(int posicaoClicada) {
+        Evento evento = adapterEventos.getItem(posicaoClicada);
+
+        adapterEventos.remove(evento);
+        adapterEventos.notifyDataSetChanged();
     }
 
     //FUNÇÃO PARA O LISTVIEW DEFINIR ONCLICK
