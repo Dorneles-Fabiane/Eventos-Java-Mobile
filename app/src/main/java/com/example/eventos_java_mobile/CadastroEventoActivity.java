@@ -3,6 +3,7 @@ package com.example.eventos_java_mobile;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
     private boolean edicao = false;
     private int id = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
     }
 
-    /*private void validaCampos() { // PODEMOS CRIAR UM VALIDA CAMPOS, QUEM SABE SEJA MELHOR.
-    }*/
 
     public void onClickVoltar(View v) {
         finish();
@@ -59,21 +59,29 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
         String nome = editTextNome.getText().toString();
 
-        /*if (nome.isEmpty() ){ // Identifica que o capo esta vazio, porém temos que colocar essa informação no PLAINTEXT do cadastro.
-            Toast.makeText(CadastroEventoActivity.this, "É preciso informar o nome", Toast.LENGTH_LONG).show();
-        }*/
-
         String data = editTextData.getText().toString(); // LocalDate data = LocalDate.parse(editTextData.getText().toString());
-
-        /*if (data.isEmpty() ){
-            Toast.makeText(CadastroEventoActivity.this, "É preciso informar a data", Toast.LENGTH_LONG).show();
-        }*/
 
         String local = editTextLocal.getText().toString();
 
-        /*if (local.isEmpty() ){
-            Toast.makeText(CadastroEventoActivity.this, "É preciso informar o local", Toast.LENGTH_LONG).show();
-        }*/
+        // VALIDAÇÃO CAMPOS
+
+        if (nome.isEmpty() ) {
+            editTextNome.setError("* É preciso informar o nome");
+            editTextNome.requestFocus();
+            return;
+        }
+
+        if (data.isEmpty() ) {
+            editTextData.setError("* É preciso informar a data");
+            editTextData.requestFocus();
+            return;
+        }
+
+        if (local.isEmpty() ) {
+            editTextLocal.setError("* É preciso informar o local");
+            editTextLocal.requestFocus();
+            return;
+        }
 
         Evento evento = new Evento(id, nome, data, local);
         Intent intent = new Intent();
@@ -87,7 +95,8 @@ public class CadastroEventoActivity extends AppCompatActivity {
             setResult(RESULT_CODE_NOVO_EVENTO, intent);
         }
 
-
         finish();
+
     }
+
 }
