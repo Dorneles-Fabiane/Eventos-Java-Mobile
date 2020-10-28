@@ -14,15 +14,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import com.example.eventos_java_mobile.database.EventoDAO;
 import com.example.eventos_java_mobile.modelo.Evento;
 
 public class MainActivity extends AppCompatActivity {
-
-    //FINAL não permite alterar a variável (CONSTANTE)
-    private final int REQUEST_CODE_NOVO_EVENTO = 1;
-    private final int RESULT_CODE_NOVO_EVENTO = 10;
-    private final int REQUEST_CODE_EDITAR_EVENTO = 2;
-    private final int RESULT_CODE_EVENTO_EDITADO = 11;
 
     private ListView listViewEventos;
     private ArrayAdapter<Evento> adapterEventos;
@@ -33,19 +29,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Cadastro de Eventos");
-
         listViewEventos = findViewById(R.id.listView_eventos);
-        ArrayList<Evento> eventos = this.criarListaEventos();
-
-        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this, android.R.layout.simple_list_item_1, eventos);
-        listViewEventos.setAdapter(adapterEventos);
-
         definirOnClickListenerListView();
 
     }
 
     @Override protected void onResume() {
         super.onResume();
+
+        EventoDAO eventoDAO = new EventoDAO(getBaseContext());
+        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this, android.R.layout.simple_list_item_1, eventoDAO.listar());
+        listViewEventos.setAdapter(adapterEventos);
+
         definirOnClickListenerListView();
 
         listViewEventos.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -86,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 Evento eventoClicado = adapterEventos.getItem(position);
                 Intent intent = new Intent(MainActivity.this, CadastroEventoActivity.class);
                 intent.putExtra("eventoEdicao", eventoClicado);
-                startActivityForResult(intent, REQUEST_CODE_EDITAR_EVENTO);
+                startActivity(intent);
 
             }
         });
@@ -103,29 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickNovoEvento(View v) {
         Intent intent = new Intent(MainActivity.this, CadastroEventoActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_NOVO_EVENTO);
+        startActivity(intent);
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_CODE_NOVO_EVENTO && resultCode == RESULT_CODE_NOVO_EVENTO) {
-            Evento evento = (Evento) data.getExtras().getSerializable("novoEvento");
-            evento.setId(++id);
-            this.adapterEventos.add(evento);
-        } else if (requestCode == REQUEST_CODE_EDITAR_EVENTO && resultCode == RESULT_CODE_EVENTO_EDITADO){
-            Evento eventoEditado = (Evento) data.getExtras().getSerializable("eventoEditado");
-            for (int i = 0; i < adapterEventos.getCount(); i++) {
-                Evento evento = adapterEventos.getItem(i);
-                if (evento.getId() == eventoEditado.getId()) {
-                    adapterEventos.remove(evento);
-                    adapterEventos.insert(eventoEditado, i);
-                    break;
-                }
-
-            }
-            Toast.makeText(MainActivity.this, "Evento Editado", Toast.LENGTH_LONG).show();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }
