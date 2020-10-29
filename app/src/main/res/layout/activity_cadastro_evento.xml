@@ -52,6 +52,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_apagar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickSalvar"
+            android:text="Apagar" />
+
+        <Button
             android:id="@+id/btn_voltar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

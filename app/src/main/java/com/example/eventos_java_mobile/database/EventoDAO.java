@@ -34,6 +34,16 @@ public class EventoDAO {
                 null, contentValues) > 0;
     }
 
+    public boolean deletar (Evento evento) {
+        ContentValues values = new ContentValues();
+        values.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
+        values.put(EventoEntity.COLUMN_NAME_LOCAL, evento.getLocal());
+        values.put(EventoEntity.COLUMN_NAME_NOME, evento.getNome());
+        return dbGateway.getDatabase().delete(EventoEntity.TABLE_NAME,
+                EventoEntity._ID + "=?",
+                new String[]{String.valueOf(evento.getId())}) == evento.getId();
+    }
+
     public List<Evento> listar() {
         List<Evento> eventos = new ArrayList<>();
         Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS, null);

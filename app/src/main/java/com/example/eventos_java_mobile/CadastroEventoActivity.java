@@ -83,12 +83,18 @@ public class CadastroEventoActivity extends AppCompatActivity {
         Evento evento = new Evento(id, nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         boolean salvou = eventoDAO.salvar(evento);
+        boolean deletou = eventoDAO.deletar(evento);
         if (salvou) {
+            Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso!", Toast.LENGTH_LONG).show();
+            finish();
+        } if (deletou) {
+            Toast.makeText(CadastroEventoActivity.this, "Evento deletado com sucesso!", Toast.LENGTH_LONG).show();
             finish();
         } else {
-            Toast.makeText(CadastroEventoActivity.this, "Erro ao Salvar", Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroEventoActivity.this, "[Erro!]", Toast.LENGTH_LONG).show();
         }
 
     }
+
 
 }
