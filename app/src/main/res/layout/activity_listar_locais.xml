@@ -8,6 +8,7 @@
     tools:context=".ListarLocaisActivity">
 
     <ListView
+        android:id="@+id/listView_locais"
         android:layout_width="match_parent"
         android:layout_height="398dp" />
 
@@ -16,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#5B1AC3"
+        android:onClick="onClickNovoLocal"
         android:text="+ Novo Local"
         android:textColor="#FFFFFF" />
 
@@ -24,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#5B1AC3"
+        android:onClick="onClickEventos"
         android:text="Eventos"
         android:textColor="#FFFFFF" />
 </LinearLayout>

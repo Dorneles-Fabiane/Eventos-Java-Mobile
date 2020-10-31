@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#5B1AC3"
         android:fontFamily="sans-serif-black"
+        android:onClick="onClickLocais"
         android:text="Locais"
         android:textAlignment="center"
         android:textColor="#FFFFFF" />

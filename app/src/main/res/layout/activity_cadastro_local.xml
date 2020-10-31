@@ -56,12 +56,12 @@
         android:text="Capacidade de Público" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/editText_capacidadePublico"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Digite a capacidade máxima"
-        android:inputType="textPersonName" />
+        android:inputType="number" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,20 +73,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Voltar" />
+            android:backgroundTint="#5B1AC3"
+            android:onClick="onClickVoltarLocal"
+            android:text="Voltar"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn_apagar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Apagar" />
+            android:backgroundTint="#5B1AC3"
+            android:text="Apagar"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_salvar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Salvar" />
+        android:backgroundTint="#5B1AC3"
+        android:onClick="onClickSalvarLocal"
+        android:text="Salvar"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

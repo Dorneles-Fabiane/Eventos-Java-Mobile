@@ -3,7 +3,6 @@ package com.example.eventos_java_mobile.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.ListView;
 
 import com.example.eventos_java_mobile.database.entity.LocalEntity;
 import com.example.eventos_java_mobile.modelo.Local;
@@ -44,7 +43,7 @@ public class LocalDAO {
             String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
             String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
             int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
-            locais.add(new Local(nome, bairro, cidade, capacidadePublico));
+            locais.add(new Local(id, nome, bairro, cidade, capacidadePublico));
         }
         cursor.close();
         return locais;

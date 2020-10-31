@@ -10,7 +10,7 @@ public final class Local implements Serializable {
     private String cidade;
     private int capacidadePublico;
 
-    public Local (String nome, String bairro, String cidade, int capacidadePublico) {
+    public Local (int id, String nome, String bairro, String cidade, int capacidadePublico) {
         this.nome = nome;
         this.bairro = bairro;
         this.cidade = cidade;
@@ -64,11 +64,6 @@ public final class Local implements Serializable {
 
     @Override
     public String toString() {
-        return "Local{" +
-                "nome='" + nome + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", capacidadePublico=" + capacidadePublico +
-                '}';
+        return nome + " - " + cidade;
     }
 }

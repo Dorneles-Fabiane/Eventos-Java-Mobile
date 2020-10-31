@@ -16,7 +16,7 @@ import com.example.eventos_java_mobile.database.contract.LocalContract;
 public class DatabaseDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "db.evento";
-    private static final int DATABASE_VERSION = 1; //Sempre que atualizar o banco, tem que mudar a versão.
+    private static final int DATABASE_VERSION = 2; //Sempre que atualizar o banco, tem que mudar a versão.
 
     //Inicia o processo de conexão com o banco. Se não achar BD ele criará com o onCreate.
     public DatabaseDBHelper(@Nullable Context context) {
