@@ -87,7 +87,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         if (salvou) {
             Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso!", Toast.LENGTH_LONG).show();
             finish();
-        } if (deletou) {
+        } else if (deletou) {
             Toast.makeText(CadastroEventoActivity.this, "Evento deletado com sucesso!", Toast.LENGTH_LONG).show();
             finish();
         } else {

@@ -5,48 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CadastroEventoActivity">
+    tools:context=".CadastroLocalActivity">
 
     <TextView
-        android:id="@+id/textView_nome"
+        android:id="@+id/textView_nomeL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome do Evento" />
+        android:text="Local do evento" />
 
     <EditText
-        android:id="@+id/editText_nome"
+        android:id="@+id/editText_nomeL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Digite o nome do evento"
+        android:hint="Digite o nome do local"
         android:inputType="textPersonName" />
 
     <TextView
-        android:id="@+id/textView_data"
+        android:id="@+id/textView_bairro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Data do Evento" />
+        android:text="Bairro" />
 
     <EditText
-        android:id="@+id/editText_data"
+        android:id="@+id/editText_bairro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Digite a data do evento"
-        android:inputType="date" />
+        android:hint="Digite o bairro"
+        android:inputType="textPersonName" />
 
     <TextView
-        android:id="@+id/textView_local"
+        android:id="@+id/textView_cidade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Local do Evento" />
+        android:text="Cidade" />
 
     <EditText
-        android:id="@+id/editText_local"
+        android:id="@+id/editText_cidade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Digite o local do evento"
+        android:hint="Digite a cidade"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView_capacidadePublico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Capacidade de Público" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Digite a capacidade máxima"
         android:inputType="textPersonName" />
 
     <LinearLayout
@@ -55,11 +69,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_voltar"
+            android:id="@+id/btn_voltarL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="onClickVoltar"
             android:text="Voltar" />
 
         <Button
@@ -67,16 +80,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="onClickSalvar"
             android:text="Apagar" />
-
-        <Button
-            android:id="@+id/btn_salvar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClickSalvar"
-            android:text="Salvar" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_salvar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salvar" />
 
 </LinearLayout>

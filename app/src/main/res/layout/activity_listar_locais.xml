@@ -5,31 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ListarLocaisActivity">
 
     <ListView
-        android:id="@+id/listView_eventos"
         android:layout_width="match_parent"
-        android:layout_height="380dp" />
+        android:layout_height="398dp" />
 
     <Button
-        android:id="@+id/btn_novo_evento"
+        android:id="@+id/btn_novo_local"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#5B1AC3"
-        android:fontFamily="sans-serif-black"
-        android:onClick="onClickNovoEvento"
-        android:text="+  novo evento"
-        android:textAlignment="center"
+        android:text="+ Novo Local"
         android:textColor="#FFFFFF" />
 
     <Button
-        android:id="@+id/btn_local"
+        android:id="@+id/btn_eventos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#5B1AC3"
-        android:fontFamily="sans-serif-black"
-        android:text="Locais"
-        android:textAlignment="center"
+        android:text="Eventos"
         android:textColor="#FFFFFF" />
 </LinearLayout>
