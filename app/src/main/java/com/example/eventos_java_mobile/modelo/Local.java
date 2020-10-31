@@ -11,6 +11,7 @@ public final class Local implements Serializable {
     private int capacidadePublico;
 
     public Local (int id, String nome, String bairro, String cidade, int capacidadePublico) {
+        this.id = id;
         this.nome = nome;
         this.bairro = bairro;
         this.cidade = cidade;

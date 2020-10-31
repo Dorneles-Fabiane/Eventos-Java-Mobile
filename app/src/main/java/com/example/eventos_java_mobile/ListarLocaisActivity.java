@@ -16,6 +16,7 @@ public class ListarLocaisActivity extends AppCompatActivity {
 
     private ListView listViewLocais;
     private ArrayAdapter<Local> localAdaptar;
+    private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class ListarLocaisActivity extends AppCompatActivity {
 
         LocalDAO localDAO = new LocalDAO(getBaseContext());
 
-        localAdaptar = new ArrayAdapter<>(ListarLocaisActivity.this,
+        localAdaptar = new ArrayAdapter<Local>(ListarLocaisActivity.this,
                 android.R.layout.simple_list_item_1,
                 localDAO.listarLocais());
         listViewLocais.setAdapter(localAdaptar);
@@ -43,7 +44,7 @@ public class ListarLocaisActivity extends AppCompatActivity {
         listViewLocais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Local localClicado =localAdaptar.getItem(position);
+                Local localClicado = localAdaptar.getItem(position);
                 Intent intent = new Intent(ListarLocaisActivity.this, CadastroLocalActivity.class);
 
                 intent.putExtra("localEdicao", localClicado);

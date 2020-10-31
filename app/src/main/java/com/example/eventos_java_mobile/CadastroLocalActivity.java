@@ -35,13 +35,12 @@ public class CadastroLocalActivity extends AppCompatActivity {
 
     private void carregarLocal() {
         Intent intent = getIntent();
-        if (intent != null && intent.getExtras() != null
-            && intent.getExtras().get("localEdicao") != null) {
+        if (intent != null && intent.getExtras() != null && intent.getExtras().get("localEdicao") != null) {
             Local local = (Local) intent.getExtras().get("localEdicao");
             et_nome.setText(local.getNome());
             et_bairro.setText(local.getBairro());
             et_cidade.setText(local.getCidade());
-            et_capacidadePublico.setText(local.getCapacidadePublico());
+            et_capacidadePublico.setText(String.valueOf(local.getCapacidadePublico()));
             id = local.getId();
         }
     }
