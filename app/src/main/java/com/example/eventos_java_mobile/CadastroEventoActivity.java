@@ -21,8 +21,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_evento);
-        setTitle("Cadastro de Evento");
-
+        setTitle("CADASTRO DE EVENTO");
         carregarEvento();
     }
 
@@ -39,62 +38,60 @@ public class CadastroEventoActivity extends AppCompatActivity {
             editTextLocal.setText(evento.getLocal());
             id = evento.getId();
         }
-
     }
 
-
-    public void onClickVoltar(View v) {
-        finish();
-    }
-
-    public void onClickSalvar(View v){
-
+    public void onClickExcluirEvento(View v) {
         EditText editTextNome = findViewById(R.id.editText_nome);
         EditText editTextData = findViewById(R.id.editText_data);
         EditText editTextLocal = findViewById(R.id.editText_local);
 
-
         String nome = editTextNome.getText().toString();
-
-        String data = editTextData.getText().toString(); // LocalDate data = LocalDate.parse(editTextData.getText().toString());
-
+        String data = editTextData.getText().toString();
         String local = editTextLocal.getText().toString();
-
-        // VALIDAÇÃO CAMPOS
-
-        if (nome.isEmpty() ) {
-            editTextNome.setError("* É preciso informar o nome");
-            editTextNome.requestFocus();
-            return;
-        }
-
-        if (data.isEmpty() ) {
-            editTextData.setError("* É preciso informar a data");
-            editTextData.requestFocus();
-            return;
-        }
-
-        if (local.isEmpty() ) {
-            editTextLocal.setError("* É preciso informar o local");
-            editTextLocal.requestFocus();
-            return;
-        }
 
         Evento evento = new Evento(id, nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
+
+        boolean deletou = eventoDAO.excluirEvento(evento);
+        if(deletou) {
+            Toast.makeText(CadastroEventoActivity.this, "Evento excluido com sucesso!", Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            Toast.makeText(CadastroEventoActivity.this, "Erro ao apagar", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void onClickVoltar(View v) {
+        finish();
+    }
+
+    public void onClickSalvar(View v) {
+        EditText editTextNome = findViewById(R.id.editText_nome);
+        EditText editTextData = findViewById(R.id.editText_data);
+        EditText editTextLocal = findViewById(R.id.editText_local);
+
+        String nome = editTextNome.getText().toString();
+        String data = editTextData.getText().toString();
+        String local = editTextLocal.getText().toString();
+
+        //VALIDAÇÃO DE CAMPOS EVENTO:
+
+
+        Evento evento = new Evento(id,nome, data, local);
+        EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         boolean salvou = eventoDAO.salvar(evento);
-        boolean deletou = eventoDAO.deletar(evento);
+        boolean deletou = eventoDAO.excluirEvento(evento);
+
         if (salvou) {
             Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso!", Toast.LENGTH_LONG).show();
             finish();
+
         } else if (deletou) {
             Toast.makeText(CadastroEventoActivity.this, "Evento deletado com sucesso!", Toast.LENGTH_LONG).show();
             finish();
+
         } else {
-            Toast.makeText(CadastroEventoActivity.this, "[Erro!]", Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
         }
-
     }
-
 
 }

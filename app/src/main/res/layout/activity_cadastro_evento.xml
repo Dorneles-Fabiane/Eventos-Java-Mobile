@@ -59,24 +59,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="#5B1AC3"
             android:onClick="onClickVoltar"
-            android:text="Voltar" />
+            android:text="Voltar"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn_apagar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="onClickSalvar"
-            android:text="Apagar" />
+            android:backgroundTint="#5B1AC3"
+            android:onClick="onClickExcluirEvento"
+            android:text="Apagar"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn_salvar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="#5B1AC3"
             android:onClick="onClickSalvar"
-            android:text="Salvar" />
+            android:text="Salvar"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </LinearLayout>

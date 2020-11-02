@@ -9,7 +9,6 @@ import java.io.Serializable;
 public class Evento implements Serializable {
 
     private int id;
-
     private String nome;
     //private LocalDate data;     //Não coloquei o "LocalDate" porque o aplicativo cai se aplico esse formato. Ao invés coloquei a DATA como STRING.
     private String data;
@@ -30,12 +29,6 @@ public class Evento implements Serializable {
         this.id = id;
     }
 
-    public Evento(String nome, String data, String local) {
-        this.nome = nome;
-        this.data = data;
-        this.local = local;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -52,14 +45,6 @@ public class Evento implements Serializable {
         this.data = data;
     }
 
-    //SOBRESCRITA DATA FORMATO - CASO O LocalDate funcione, este método aplica um novo formato para a data.
-
-   /*public void setData(String data) {
-        String format = "dd/MM/yy";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-        this.data = LocalDate.parse(data, formatter);
-    }*/
-
     public String getLocal() {
         return local;
     }
@@ -68,10 +53,18 @@ public class Evento implements Serializable {
         this.local = local;
     }
 
+    //SOBRESCRITA DATA FORMATO - CASO O LocalDate funcione, este método aplica um novo formato para a data.
+
+   /*public void setData(String data) {
+        String format = "dd/MM/yy";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        this.data = LocalDate.parse(data, formatter);
+    }*/
+
     @NonNull
     @Override
     public String toString() {
-        return nome + " - " + data;
+        return id + " - " + nome;
     }
 }
 

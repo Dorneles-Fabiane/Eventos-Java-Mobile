@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Cadastro de Eventos");
+        setTitle("PRÓXIMOS EVENTOS");
         listViewEventos = findViewById(R.id.listView_eventos);
         definirOnClickListenerListView();
 
@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
-        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this, android.R.layout.simple_list_item_1, eventoDAO.listar());
+        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                eventoDAO.listar());
         listViewEventos.setAdapter(adapterEventos);
 
         definirOnClickListenerListView();
@@ -87,14 +89,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<Evento> criarListaEventos() {
-        ArrayList<Evento> eventos = new ArrayList<Evento>();
-        //Não coloquei o "LocalDate.of" porque o aplicativo cai se aplico esse formato. Ao invés coloquei a DATA como STRING.
-        eventos.add(new Evento("Reunião 01", /*LocalDate.of(2020, 8, 10),*/ "20/08/2020", "Florianópolis"));
-        eventos.add(new Evento("Reuniao 02", /*LocalDate.of(2020, 5, 20),*/  "15/10/2020", "Curitiba"));
-        eventos.add(new Evento("Reunião 03", /*LocalDate.of(2020, 3, 25), */ "25/05/2020", "São Paulo"));
-        return eventos;
-    }
 
     public void onClickNovoEvento(View v) {
         Intent intent = new Intent(MainActivity.this, CadastroEventoActivity.class);

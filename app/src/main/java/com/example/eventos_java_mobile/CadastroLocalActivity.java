@@ -14,21 +14,13 @@ import com.example.eventos_java_mobile.modelo.Local;
 public class CadastroLocalActivity extends AppCompatActivity {
 
     private int id = 0;
-    private EditText et_nome;
-    private EditText et_bairro;
-    private EditText et_cidade;
-    private EditText et_capacidadePublico;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_local);
-        setTitle("Cadastro de Local");
-
-        et_nome = findViewById(R.id.editText_nomeL);
-        et_bairro = findViewById(R.id.editText_bairro);
-        et_cidade = findViewById(R.id.editText_cidade);
-        et_capacidadePublico = findViewById(R.id.editText_capacidadePublico);
+        setTitle("CADASTRO DE LOCAL");
 
         carregarLocal();
     }
@@ -37,11 +29,40 @@ public class CadastroLocalActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null && intent.getExtras().get("localEdicao") != null) {
             Local local = (Local) intent.getExtras().get("localEdicao");
-            et_nome.setText(local.getNome());
-            et_bairro.setText(local.getBairro());
-            et_cidade.setText(local.getCidade());
-            et_capacidadePublico.setText(String.valueOf(local.getCapacidadePublico()));
+
+            EditText editTextNomeL = findViewById(R.id.editText_nomeL);
+            EditText editTextBairro = findViewById(R.id.editText_bairro);
+            EditText editTextCidade = findViewById(R.id.editText_cidade);
+            EditText editTextCapacidadePublico  = findViewById(R.id.editText_capacidadePublico);
+
+            editTextNomeL.setText(local.getNome());
+            editTextBairro.setText(local.getBairro());
+            editTextCidade.setText(local.getCidade());
+            editTextCapacidadePublico.setText(String.valueOf(local.getCapacidadePublico()));
             id = local.getId();
+        }
+    }
+
+    public void onClickExcluirLocal(View v) {
+        EditText editTextNomeL = findViewById(R.id.editText_nomeL);
+        EditText editTextBairro = findViewById(R.id.editText_bairro);
+        EditText editTextCidade = findViewById(R.id.editText_cidade);
+        EditText editTextCapacidadePublico = findViewById(R.id.editText_capacidadePublico);
+
+        String nome = editTextNomeL.getText().toString();
+        String bairro = editTextBairro.getText().toString();
+        String cidade = editTextCidade.getText().toString();
+        int capacidadePublico = Integer.parseInt(editTextCapacidadePublico.getText().toString());
+
+        Local local = new Local(id, nome, bairro, cidade, capacidadePublico);
+        LocalDAO localDAO = new LocalDAO(getBaseContext());
+
+        boolean deletou = localDAO.excluirLocal(local);
+        if(deletou) {
+            Toast.makeText(CadastroLocalActivity.this, "Local excluido com sucesso!", Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            Toast.makeText(CadastroLocalActivity.this, "Erro ao apagar", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -50,20 +71,36 @@ public class CadastroLocalActivity extends AppCompatActivity {
     }
 
     public void onClickSalvarLocal(View v) {
-        String nome = et_nome.getText().toString();
-        String bairro = et_bairro.getText().toString();
-        String cidade = et_cidade.getText().toString();
-        int capacidaPublico = Integer.parseInt(et_capacidadePublico.getText().toString());
+
+        EditText editTextNomeL = findViewById(R.id.editText_nomeL);
+        EditText editTextBairro = findViewById(R.id.editText_bairro);
+        EditText editTextCidade = findViewById(R.id.editText_cidade);
+        EditText editTextCapacidade = findViewById(R.id.editText_capacidadePublico);
+
+        String nome = editTextNomeL.getText().toString();
+        String bairro = editTextBairro.getText().toString();
+        String cidade = editTextCidade.getText().toString();
+        int capacidaPublico = Integer.parseInt(editTextCapacidade.getText().toString());
+
+
+        // VALIDAÇÃO DE CAMPOS LOCAL:
+
 
         Local local = new Local(id, nome, bairro, cidade, capacidaPublico);
         LocalDAO localDAO = new LocalDAO(getBaseContext());
 
         boolean salvou = localDAO.salvarLocal(local);
+        boolean deletou = localDAO.excluirLocal(local);
 
         if (salvou) {
-            Toast.makeText(CadastroLocalActivity.this, "Salvou com sucesso!", Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroLocalActivity.this, "Local salvo com sucesso!", Toast.LENGTH_LONG).show();
             finish();
-        } else {
+
+        } else if (deletou) {
+            Toast.makeText(CadastroLocalActivity.this, "Local deletado com sucesso!", Toast.LENGTH_LONG).show();
+            finish();
+
+        }else {
             Toast.makeText(CadastroLocalActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
         }
 

@@ -1,5 +1,7 @@
 package com.example.eventos_java_mobile.modelo;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public final class Local implements Serializable {
@@ -18,10 +20,6 @@ public final class Local implements Serializable {
         this.capacidadePublico = capacidadePublico;
     }
 
-    //verificar necessidade do segundo construtor
-    public Local (String nome) {
-        this.nome = nome;
-    }
 
     public int getId() {
         return id;
@@ -63,8 +61,11 @@ public final class Local implements Serializable {
         this.capacidadePublico = capacidadePublico;
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return nome + " - " + cidade;
+        return this.id + " - " + this.nome;
     }
+
+
 }

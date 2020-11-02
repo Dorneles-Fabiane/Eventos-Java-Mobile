@@ -15,8 +15,8 @@ import com.example.eventos_java_mobile.database.contract.LocalContract;
 
 public class DatabaseDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "db.evento";
-    private static final int DATABASE_VERSION = 2; //Sempre que atualizar o banco, tem que mudar a versão.
+    private static final String DATABASE_NAME = "db.appSenai";
+    private static final int DATABASE_VERSION = 3; //Sempre que atualizar o banco, tem que mudar a versão.
 
     //Inicia o processo de conexão com o banco. Se não achar BD ele criará com o onCreate.
     public DatabaseDBHelper(@Nullable Context context) {
@@ -26,17 +26,20 @@ public class DatabaseDBHelper extends SQLiteOpenHelper {
     // Se não existir BD, o onCreate irá criar.
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(LocalContract.createTable());
-        db.execSQL(EventoContract.criarTabela()); //Chamando o metodo de criação da tabela.
+        db.execSQL(LocalContract.criarTabelaLocal());
+        db.execSQL(EventoContract.criarTabelaEvento());
+        //Chamando o metodo de criação da tabela.
     }
 
     // Feito para atualizar o BD (Modificar dados da tabelas, inserir tabelas)
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(EventoContract.removerTabela());
-        db.execSQL(LocalContract.dropTable());
-        onCreate(db);
-        //Ao fazer o Update é melhor chamar as funções de ALTER TABLE, a maneira atual remove toda a tabela.
+        db.execSQL(LocalContract.removerTabelaLocal());
+        db.execSQL(EventoContract.removerTabelaEvento());
+        db.execSQL(EventoContract.criarTabelaEvento());
+        db.execSQL(LocalContract.criarTabelaLocal());
 
+        //onCreate(db);
+        //Ao fazer o Update é melhor chamar as funções de ALTER TABLE, a maneira atual remove toda a tabela.
     }
 }

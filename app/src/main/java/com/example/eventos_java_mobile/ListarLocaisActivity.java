@@ -15,15 +15,14 @@ import com.example.eventos_java_mobile.modelo.Local;
 public class ListarLocaisActivity extends AppCompatActivity {
 
     private ListView listViewLocais;
-    private ArrayAdapter<Local> localAdaptar;
+    private ArrayAdapter<Local> adapterLocais;
     private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_locais);
-        setTitle("Locais");
-
+        setTitle("SEUS LOCAIS");
         listViewLocais = findViewById(R.id.listView_locais);
         definirOnClickListenerListView();
     }
@@ -33,18 +32,18 @@ public class ListarLocaisActivity extends AppCompatActivity {
         super.onResume();
 
         LocalDAO localDAO = new LocalDAO(getBaseContext());
-
-        localAdaptar = new ArrayAdapter<Local>(ListarLocaisActivity.this,
+        adapterLocais = new ArrayAdapter<Local>(ListarLocaisActivity.this,
                 android.R.layout.simple_list_item_1,
                 localDAO.listarLocais());
-        listViewLocais.setAdapter(localAdaptar);
+        listViewLocais.setAdapter(adapterLocais);
+        definirOnClickListenerListView();
     }
 
     private void definirOnClickListenerListView() {
         listViewLocais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Local localClicado = localAdaptar.getItem(position);
+                Local localClicado = adapterLocais.getItem(position);
                 Intent intent = new Intent(ListarLocaisActivity.this, CadastroLocalActivity.class);
 
                 intent.putExtra("localEdicao", localClicado);
