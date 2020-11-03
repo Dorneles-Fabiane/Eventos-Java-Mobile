@@ -76,6 +76,24 @@ public class CadastroEventoActivity extends AppCompatActivity {
         //VALIDAÇÃO DE CAMPOS EVENTO:
 
 
+        if (nome.isEmpty() ) {
+            editTextNome.setError("* É preciso informar o nome");
+            editTextNome.requestFocus();
+            return;
+        }
+
+        if (data.isEmpty() ) {
+            editTextData.setError("* É preciso informar a data");
+            editTextData.requestFocus();
+            return;
+        }
+
+        if (local.isEmpty() ) {
+            editTextLocal.setError("* É preciso informar o local");
+            editTextLocal.requestFocus();
+            return;
+        }
+
         Evento evento = new Evento(id,nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         boolean salvou = eventoDAO.salvar(evento);

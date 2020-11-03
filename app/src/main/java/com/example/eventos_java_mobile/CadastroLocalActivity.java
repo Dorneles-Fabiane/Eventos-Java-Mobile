@@ -86,6 +86,30 @@ public class CadastroLocalActivity extends AppCompatActivity {
         // VALIDAÇÃO DE CAMPOS LOCAL:
 
 
+        if (nome.isEmpty()){
+            editTextNomeL.setError("* É preciso informar o nome");
+            editTextNomeL.requestFocus();
+            return;
+        }
+
+        if (bairro.isEmpty()){
+            editTextBairro.setError("* É preciso informar um Bairro");
+            editTextBairro.requestFocus();
+            return;
+        }
+
+        if (cidade.isEmpty()){
+            editTextCidade.setError("* É preciso informar uma Cidade");
+            editTextCidade.requestFocus();
+            return;
+        }
+
+        if (capacidaPublico < 0 && capacidaPublico == 0){
+            editTextCapacidade.setError("* É preciso informar uma capacidade valida");
+            editTextCapacidade.requestFocus();
+            return;
+        }
+
         Local local = new Local(id, nome, bairro, cidade, capacidaPublico);
         LocalDAO localDAO = new LocalDAO(getBaseContext());
 
