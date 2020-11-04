@@ -14,13 +14,21 @@ import com.example.eventos_java_mobile.modelo.Local;
 public class CadastroLocalActivity extends AppCompatActivity {
 
     private int id = 0;
-
+    private EditText editTextNomeL;
+    private EditText editTextBairro;
+    private EditText editTextCidade;
+    private EditText editTextCapacidadePublico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_local);
         setTitle("CADASTRO DE LOCAL");
+
+        editTextNomeL = findViewById(R.id.editText_nomeL);
+        editTextBairro = findViewById(R.id.editText_bairro);
+        editTextCidade = findViewById(R.id.editText_cidade);
+        editTextCapacidadePublico  = findViewById(R.id.editText_capacidadePublico);
 
         carregarLocal();
     }
@@ -29,11 +37,6 @@ public class CadastroLocalActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null && intent.getExtras().get("localEdicao") != null) {
             Local local = (Local) intent.getExtras().get("localEdicao");
-
-            EditText editTextNomeL = findViewById(R.id.editText_nomeL);
-            EditText editTextBairro = findViewById(R.id.editText_bairro);
-            EditText editTextCidade = findViewById(R.id.editText_cidade);
-            EditText editTextCapacidadePublico  = findViewById(R.id.editText_capacidadePublico);
 
             editTextNomeL.setText(local.getNome());
             editTextBairro.setText(local.getBairro());
@@ -44,10 +47,6 @@ public class CadastroLocalActivity extends AppCompatActivity {
     }
 
     public void onClickExcluirLocal(View v) {
-        EditText editTextNomeL = findViewById(R.id.editText_nomeL);
-        EditText editTextBairro = findViewById(R.id.editText_bairro);
-        EditText editTextCidade = findViewById(R.id.editText_cidade);
-        EditText editTextCapacidadePublico = findViewById(R.id.editText_capacidadePublico);
 
         String nome = editTextNomeL.getText().toString();
         String bairro = editTextBairro.getText().toString();
@@ -71,20 +70,13 @@ public class CadastroLocalActivity extends AppCompatActivity {
     }
 
     public void onClickSalvarLocal(View v) {
-
-        EditText editTextNomeL = findViewById(R.id.editText_nomeL);
-        EditText editTextBairro = findViewById(R.id.editText_bairro);
-        EditText editTextCidade = findViewById(R.id.editText_cidade);
-        EditText editTextCapacidade = findViewById(R.id.editText_capacidadePublico);
-
         String nome = editTextNomeL.getText().toString();
         String bairro = editTextBairro.getText().toString();
         String cidade = editTextCidade.getText().toString();
-        int capacidaPublico = Integer.parseInt(editTextCapacidade.getText().toString());
+        int capacidaPublico = Integer.parseInt(editTextCapacidadePublico.getText().toString());
 
 
         // VALIDAÇÃO DE CAMPOS LOCAL:
-
 
         if (nome.isEmpty()){
             editTextNomeL.setError("* É preciso informar o nome");
@@ -104,9 +96,9 @@ public class CadastroLocalActivity extends AppCompatActivity {
             return;
         }
 
-        if (capacidaPublico < 0 && capacidaPublico == 0){
-            editTextCapacidade.setError("* É preciso informar uma capacidade valida");
-            editTextCapacidade.requestFocus();
+        if (capacidaPublico < 0 || capacidaPublico == 0){
+            editTextCapacidadePublico.setError("* É preciso informar uma capacidade valida");
+            editTextCapacidadePublico.requestFocus();
             return;
         }
 
@@ -114,17 +106,12 @@ public class CadastroLocalActivity extends AppCompatActivity {
         LocalDAO localDAO = new LocalDAO(getBaseContext());
 
         boolean salvou = localDAO.salvarLocal(local);
-        boolean deletou = localDAO.excluirLocal(local);
 
         if (salvou) {
             Toast.makeText(CadastroLocalActivity.this, "Local salvo com sucesso!", Toast.LENGTH_LONG).show();
             finish();
 
-        } else if (deletou) {
-            Toast.makeText(CadastroLocalActivity.this, "Local deletado com sucesso!", Toast.LENGTH_LONG).show();
-            finish();
-
-        }else {
+        } else {
             Toast.makeText(CadastroLocalActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
         }
 

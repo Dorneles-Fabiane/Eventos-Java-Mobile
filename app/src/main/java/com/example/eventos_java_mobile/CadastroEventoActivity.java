@@ -15,13 +15,20 @@ import com.example.eventos_java_mobile.modelo.Evento;
 public class CadastroEventoActivity extends AppCompatActivity {
 
     private int id = 0;
-
+    private EditText editTextNome;
+    private EditText editTextData;
+    private EditText editTextLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_evento);
         setTitle("CADASTRO DE EVENTO");
+
+        editTextNome = findViewById(R.id.editText_nome);
+        editTextData = findViewById(R.id.editText_data);
+        editTextLocal = findViewById(R.id.editText_local);
+
         carregarEvento();
     }
 
@@ -29,9 +36,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null && intent.getExtras().get("eventoEdicao") != null) {
             Evento evento = (Evento) intent.getExtras().get("eventoEdicao");
-            EditText editTextNome = findViewById(R.id.editText_nome);
-            EditText editTextData = findViewById(R.id.editText_data);
-            EditText editTextLocal = findViewById(R.id.editText_local);
 
             editTextNome.setText(evento.getNome());
             editTextData.setText(evento.getData());
@@ -41,10 +45,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
     }
 
     public void onClickExcluirEvento(View v) {
-        EditText editTextNome = findViewById(R.id.editText_nome);
-        EditText editTextData = findViewById(R.id.editText_data);
-        EditText editTextLocal = findViewById(R.id.editText_local);
-
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
         String local = editTextLocal.getText().toString();
@@ -65,16 +65,11 @@ public class CadastroEventoActivity extends AppCompatActivity {
     }
 
     public void onClickSalvar(View v) {
-        EditText editTextNome = findViewById(R.id.editText_nome);
-        EditText editTextData = findViewById(R.id.editText_data);
-        EditText editTextLocal = findViewById(R.id.editText_local);
-
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
         String local = editTextLocal.getText().toString();
 
         //VALIDAÇÃO DE CAMPOS EVENTO:
-
 
         if (nome.isEmpty() ) {
             editTextNome.setError("* É preciso informar o nome");
@@ -97,14 +92,9 @@ public class CadastroEventoActivity extends AppCompatActivity {
         Evento evento = new Evento(id,nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         boolean salvou = eventoDAO.salvar(evento);
-        boolean deletou = eventoDAO.excluirEvento(evento);
 
         if (salvou) {
             Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso!", Toast.LENGTH_LONG).show();
-            finish();
-
-        } else if (deletou) {
-            Toast.makeText(CadastroEventoActivity.this, "Evento deletado com sucesso!", Toast.LENGTH_LONG).show();
             finish();
 
         } else {

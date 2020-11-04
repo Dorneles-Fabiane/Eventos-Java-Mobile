@@ -45,35 +45,35 @@ public class MainActivity extends AppCompatActivity {
 
         definirOnClickListenerListView();
 
-//        listViewEventos.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-//            @Override public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-//                contextMenu.add(Menu.NONE, 1, Menu.NONE, "Deletar");
-//            }
-//        });
+          listViewEventos.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+              @Override public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                  contextMenu.add(Menu.NONE, 1, Menu.NONE, "Deletar");
+              }
+          });
     }
 
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)
-//                item.getMenuInfo();
-//        int posicaoClicada = menuInfo.position;
-//
-//        switch (item.getItemId()) {
-//            case 1: {
-//                removeEventoNa(posicaoClicada);
-//                break;
-//            }
-//        }
-//
-//        return super.onContextItemSelected(item);
-//    }
-//
-//    private void removeEventoNa(int posicaoClicada) {
-//        Evento evento = adapterEventos.getItem(posicaoClicada);
-//
-//        adapterEventos.remove(evento);
-//        adapterEventos.notifyDataSetChanged();
-//    }
+      @Override
+      public boolean onContextItemSelected(MenuItem item) {
+          AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)
+                  item.getMenuInfo();
+          int posicaoClicada = menuInfo.position;
+
+          switch (item.getItemId()) {
+              case 1: {
+                  removeEventoNa(posicaoClicada);
+                  break;
+              }
+          }
+
+          return super.onContextItemSelected(item);
+      }
+
+    private void removeEventoNa(int posicaoClicada) {
+          Evento evento = adapterEventos.getItem(posicaoClicada);
+
+          adapterEventos.remove(evento);
+          adapterEventos.notifyDataSetChanged();
+    }
 
     //FUNÇÃO PARA O LISTVIEW DEFINIR ONCLICK
     private void definirOnClickListenerListView() {
