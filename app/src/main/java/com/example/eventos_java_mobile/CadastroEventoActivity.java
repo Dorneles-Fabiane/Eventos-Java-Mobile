@@ -72,7 +72,9 @@ public class CadastroEventoActivity extends AppCompatActivity {
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
 
-        Local local = (Local) spinnerLocais.getSelectedItem();
+        //Local local = (Local) spinnerLocais.getSelectedItem();
+        int posicaoLocal = spinnerLocais.getSelectedItemPosition();
+        Local local = (Local) locaisAdapter.getItem(posicaoLocal);
 
         Evento evento = new Evento(id, nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());

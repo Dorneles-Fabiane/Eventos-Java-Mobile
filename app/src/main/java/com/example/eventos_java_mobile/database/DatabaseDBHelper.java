@@ -15,7 +15,7 @@ import com.example.eventos_java_mobile.database.contract.LocalContract;
 
 public class DatabaseDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "db.appSenaiV03";
+    private static final String DATABASE_NAME = "db.appSenaiV04";
     private static final int DATABASE_VERSION = 1; //Sempre que atualizar o banco, tem que mudar a versão.
 
     //Inicia o processo de conexão com o banco. Se não achar BD ele criará com o onCreate.
