@@ -14,7 +14,7 @@ import com.example.eventos_java_mobile.modelo.Local;
 public class CadastroLocalActivity extends AppCompatActivity {
 
     private int id = 0;
-    private EditText editTextNomeL;
+    private EditText editTextDescricao;
     private EditText editTextBairro;
     private EditText editTextCidade;
     private EditText editTextCapacidadePublico;
@@ -25,7 +25,7 @@ public class CadastroLocalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_local);
         setTitle("CADASTRO DE LOCAL");
 
-        editTextNomeL = findViewById(R.id.editText_nomeL);
+        editTextDescricao = findViewById(R.id.editText_nomeL);
         editTextBairro = findViewById(R.id.editText_bairro);
         editTextCidade = findViewById(R.id.editText_cidade);
         editTextCapacidadePublico  = findViewById(R.id.editText_capacidadePublico);
@@ -38,7 +38,7 @@ public class CadastroLocalActivity extends AppCompatActivity {
         if (intent != null && intent.getExtras() != null && intent.getExtras().get("localEdicao") != null) {
             Local local = (Local) intent.getExtras().get("localEdicao");
 
-            editTextNomeL.setText(local.getNome());
+            editTextDescricao.setText(local.getDescricao());
             editTextBairro.setText(local.getBairro());
             editTextCidade.setText(local.getCidade());
             editTextCapacidadePublico.setText(String.valueOf(local.getCapacidadePublico()));
@@ -48,12 +48,12 @@ public class CadastroLocalActivity extends AppCompatActivity {
 
     public void onClickExcluirLocal(View v) {
 
-        String nome = editTextNomeL.getText().toString();
+        String descricao = editTextDescricao.getText().toString();
         String bairro = editTextBairro.getText().toString();
         String cidade = editTextCidade.getText().toString();
         int capacidadePublico = Integer.parseInt(editTextCapacidadePublico.getText().toString());
 
-        Local local = new Local(id, nome, bairro, cidade, capacidadePublico);
+        Local local = new Local(id, descricao, bairro, cidade, capacidadePublico);
         LocalDAO localDAO = new LocalDAO(getBaseContext());
 
         boolean deletou = localDAO.excluirLocal(local);
@@ -70,7 +70,7 @@ public class CadastroLocalActivity extends AppCompatActivity {
     }
 
     public void onClickSalvarLocal(View v) {
-        String nome = editTextNomeL.getText().toString();
+        String descricao = editTextDescricao.getText().toString();
         String bairro = editTextBairro.getText().toString();
         String cidade = editTextCidade.getText().toString();
         int capacidaPublico = Integer.parseInt(editTextCapacidadePublico.getText().toString());
@@ -78,9 +78,9 @@ public class CadastroLocalActivity extends AppCompatActivity {
 
         // VALIDAÇÃO DE CAMPOS LOCAL:
 
-        if (nome.isEmpty()){
-            editTextNomeL.setError("* É preciso informar o nome");
-            editTextNomeL.requestFocus();
+        if (descricao.isEmpty()){
+            editTextDescricao.setError("* É preciso informar o nome");
+            editTextDescricao.requestFocus();
             return;
         }
 
@@ -102,7 +102,7 @@ public class CadastroLocalActivity extends AppCompatActivity {
             return;
         }
 
-        Local local = new Local(id, nome, bairro, cidade, capacidaPublico);
+        Local local = new Local(id, descricao, bairro, cidade, capacidaPublico);
         LocalDAO localDAO = new LocalDAO(getBaseContext());
 
         boolean salvou = localDAO.salvarLocal(local);

@@ -5,14 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.eventos_java_mobile.database.entity.EventoEntity;
+import com.example.eventos_java_mobile.database.entity.LocalEntity;
 import com.example.eventos_java_mobile.modelo.Evento;
+import com.example.eventos_java_mobile.modelo.Local;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventoDAO {
 
-    private final String SQL_LISTAR_TODOS_EVENTOS = "SELECT * FROM " + EventoEntity.TABLE_NAME;
+    private final String SQL_LISTAR_TODOS_EVENTOS = "SELECT eventos._id, nome, data, idlocal, descricao FROM " + EventoEntity.TABLE_NAME +
+            " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
+            " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID;
     private DBGateway dbGateway;
 
     public EventoDAO(Context context) {
@@ -21,9 +25,10 @@ public class EventoDAO {
 
     public boolean salvar(Evento evento) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
-        contentValues.put(EventoEntity.COLUMN_NAME_LOCAL, evento.getLocal());
         contentValues.put(EventoEntity.COLUMN_NAME_NOME, evento.getNome());
+        contentValues.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
+        contentValues.put(EventoEntity.COLUMN_NAME_ID_LOCAL, evento.getLocal().getId());
+
         if (evento.getId() > 0 ){
             return dbGateway.getDatabase().update(EventoEntity.TABLE_NAME, contentValues, EventoEntity._ID + "=?",
                     new String[] {String.valueOf(evento.getId())}) > 0;
@@ -33,9 +38,10 @@ public class EventoDAO {
 
     public boolean excluirEvento(Evento evento) {
         ContentValues values = new ContentValues();
-        values.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
-        values.put(EventoEntity.COLUMN_NAME_LOCAL, evento.getLocal());
         values.put(EventoEntity.COLUMN_NAME_NOME, evento.getNome());
+        values.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
+        values.put(EventoEntity.COLUMN_NAME_ID_LOCAL, evento.getLocal().getId());
+
         return dbGateway.getDatabase().delete(EventoEntity.TABLE_NAME,
                 EventoEntity._ID + "=?",
                 new String[]{String.valueOf(evento.getId())}) == evento.getId();
@@ -48,7 +54,14 @@ public class EventoDAO {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
             String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_NOME));
             String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_DATA));
-            String local = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_LOCAL));
+            int idLocal = cursor.getInt(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_ID_LOCAL));
+            String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO));
+            String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
+            String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
+            int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
+
+
+            Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
             eventos.add(new Evento(id, nome, data, local));
         }
         cursor.close();

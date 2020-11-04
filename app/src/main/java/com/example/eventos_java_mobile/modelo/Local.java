@@ -7,14 +7,14 @@ import java.io.Serializable;
 public final class Local implements Serializable {
 
     private int id;
-    private String nome;
+    private String descricao;
     private String bairro;
     private String cidade;
     private int capacidadePublico;
 
-    public Local (int id, String nome, String bairro, String cidade, int capacidadePublico) {
+    public Local (int id, String descricao, String bairro, String cidade, int capacidadePublico) {
         this.id = id;
-        this.nome = nome;
+        this.descricao = descricao;
         this.bairro = bairro;
         this.cidade = cidade;
         this.capacidadePublico = capacidadePublico;
@@ -29,12 +29,12 @@ public final class Local implements Serializable {
         this.id= id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getBairro() {
@@ -64,7 +64,7 @@ public final class Local implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return this.id + " - " + this.nome;
+        return this.id + " - " + this.descricao;
     }
 
 

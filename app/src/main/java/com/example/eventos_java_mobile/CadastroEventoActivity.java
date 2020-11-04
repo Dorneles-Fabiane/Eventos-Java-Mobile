@@ -5,31 +5,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import java.time.LocalDate;
 
 import com.example.eventos_java_mobile.database.EventoDAO;
+import com.example.eventos_java_mobile.database.LocalDAO;
 import com.example.eventos_java_mobile.modelo.Evento;
+import com.example.eventos_java_mobile.modelo.Local;
 
 public class CadastroEventoActivity extends AppCompatActivity {
 
     private int id = 0;
     private EditText editTextNome;
     private EditText editTextData;
-    private EditText editTextLocal;
+    private Spinner spinnerLocais;
+    private ArrayAdapter<Local> locaisAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_evento);
         setTitle("CADASTRO DE EVENTO");
-
+        spinnerLocais = findViewById(R.id.spinner_locais);
         editTextNome = findViewById(R.id.editText_nome);
         editTextData = findViewById(R.id.editText_data);
-        editTextLocal = findViewById(R.id.editText_local);
 
+        carregarLocais();
         carregarEvento();
+    }
+
+    private void carregarLocais(){
+        LocalDAO localDAO = new LocalDAO(getBaseContext());
+        locaisAdapter = new ArrayAdapter<Local>(CadastroEventoActivity.this,
+                android.R.layout.simple_spinner_item,
+                localDAO.listarLocais());
+        spinnerLocais.setAdapter(locaisAdapter);
     }
 
     private void carregarEvento() {
@@ -39,15 +52,27 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
             editTextNome.setText(evento.getNome());
             editTextData.setText(evento.getData());
-            editTextLocal.setText(evento.getLocal());
+            int posicaoLocal = obterPosicaoLocal(evento.getLocal());
+            spinnerLocais.setSelection(posicaoLocal);
             id = evento.getId();
         }
+    }
+
+    //Método de Posição
+    private int obterPosicaoLocal(Local local) {
+        for (int posicao = 0; posicao < locaisAdapter.getCount(); posicao++) {
+            if (locaisAdapter.getItem(posicao).getId() == local.getId()) {
+                return posicao;
+            }
+        }
+        return 0;
     }
 
     public void onClickExcluirEvento(View v) {
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
-        String local = editTextLocal.getText().toString();
+
+        Local local = (Local) spinnerLocais.getSelectedItem();
 
         Evento evento = new Evento(id, nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
@@ -60,6 +85,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
             Toast.makeText(CadastroEventoActivity.this, "Erro ao apagar", Toast.LENGTH_LONG).show();
         }
     }
+
     public void onClickVoltar(View v) {
         finish();
     }
@@ -67,7 +93,10 @@ public class CadastroEventoActivity extends AppCompatActivity {
     public void onClickSalvar(View v) {
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
-        String local = editTextLocal.getText().toString();
+
+        //Local local = (Local) spinnerLocais.getSelectedItem();
+        int posicaoLocal = spinnerLocais.getSelectedItemPosition();
+        Local local = (Local) locaisAdapter.getItem(posicaoLocal);
 
         //VALIDAÇÃO DE CAMPOS EVENTO:
 
@@ -77,17 +106,13 @@ public class CadastroEventoActivity extends AppCompatActivity {
             return;
         }
 
+
         if (data.isEmpty() ) {
             editTextData.setError("* É preciso informar a data");
             editTextData.requestFocus();
             return;
         }
 
-        if (local.isEmpty() ) {
-            editTextLocal.setError("* É preciso informar o local");
-            editTextLocal.requestFocus();
-            return;
-        }
 
         Evento evento = new Evento(id,nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());

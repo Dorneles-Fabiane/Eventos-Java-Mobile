@@ -23,7 +23,7 @@ public class LocalDAO {
 
     public boolean salvarLocal(Local local) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(LocalEntity.TABLE_COLUMN_NAME_NOME, local.getNome());
+        contentValues.put(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO, local.getDescricao());
         contentValues.put(LocalEntity.TABLE_COLUMN_NAME_BAIRRO, local.getBairro());
         contentValues.put(LocalEntity.TABLE_COLUMN_NAME_CIDADE, local.getCidade());
         contentValues.put(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO, local.getCapacidadePublico());
@@ -39,7 +39,7 @@ public class LocalDAO {
 
     public boolean excluirLocal(Local local) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(LocalEntity.TABLE_COLUMN_NAME_NOME, local.getNome());
+        contentValues.put(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO, local.getDescricao());
         contentValues.put(LocalEntity.TABLE_COLUMN_NAME_BAIRRO, local.getBairro());
         contentValues.put(LocalEntity.TABLE_COLUMN_NAME_CIDADE, local.getCidade());
         contentValues.put(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO, local.getCapacidadePublico());
@@ -53,11 +53,11 @@ public class LocalDAO {
         Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS_LOCAIS, null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(LocalEntity._ID));
-            String nome = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_NOME));
+            String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO));
             String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
             String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
             int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
-            locais.add(new Local(id, nome, bairro, cidade, capacidadePublico));
+            locais.add(new Local(id, descricao, bairro, cidade, capacidadePublico));
         }
         cursor.close();
         return locais;
