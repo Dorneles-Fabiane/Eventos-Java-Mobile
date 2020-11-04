@@ -11,12 +11,19 @@
         android:id="@+id/textView_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome do Evento" />
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="30px"
+        android:layout_marginRight="20px"
+        android:text="Nome do Evento"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editText_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:layout_marginRight="20px"
         android:ems="10"
         android:hint="Digite o nome do evento"
         android:inputType="textPersonName" />
@@ -25,12 +32,19 @@
         android:id="@+id/textView_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Data do Evento" />
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="20px"
+        android:text="Data do Evento"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editText_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:layout_marginRight="20px"
         android:ems="10"
         android:hint="Digite a data do evento"
         android:inputType="date" />
@@ -39,17 +53,30 @@
         android:id="@+id/textView_local"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Local do Evento" />
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="20px"
+        android:text="Local do Evento"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/spinner_locais"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:layout_marginRight="20px"
+        android:layout_marginBottom="10px"
+        android:ems="10"
+        android:hint="Selecione o local"
+        android:paddingVertical="60px" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
 
         <Button
             android:id="@+id/btn_voltar"
