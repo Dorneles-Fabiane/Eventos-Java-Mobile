@@ -7,6 +7,33 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView_pesquisaCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="20px"
+        android:text="Pesquisa Cidade"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText_pesquisaCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="20px"
+        android:ems="10"
+        android:hint="Digite o nome da cidade"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar" />
+
     <ListView
         android:id="@+id/listView_eventos"
         android:layout_width="match_parent"
