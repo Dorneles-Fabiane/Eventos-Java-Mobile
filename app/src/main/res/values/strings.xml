@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Eventos-Java-Mobile</string>
+    <string name="app_name">Eventos</string>
+    <string name="search_hint">Pesquisar Evento</string>
 </resources>
