@@ -16,7 +16,6 @@ public class ListarLocaisActivity extends AppCompatActivity {
 
     private ListView listViewLocais;
     private ArrayAdapter<Local> adapterLocais;
-    private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

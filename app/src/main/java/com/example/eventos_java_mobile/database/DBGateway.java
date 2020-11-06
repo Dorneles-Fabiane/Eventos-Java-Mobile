@@ -26,10 +26,9 @@ public class DBGateway {
     private DBGateway (Context context) {
         DatabaseDBHelper dbHelper = new DatabaseDBHelper(context);
         db = dbHelper.getWritableDatabase(); // Conexão para escrita e leitura de dados.
-
     }
 
-    //retorno
+    //Retorno
     public SQLiteDatabase getDatabase(){
         return db;
     }
