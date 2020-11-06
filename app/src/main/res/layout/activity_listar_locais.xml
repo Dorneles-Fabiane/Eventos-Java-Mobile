@@ -7,26 +7,32 @@
     android:orientation="vertical"
     tools:context=".ListarLocaisActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_novo_local"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5B1AC3"
+            android:onClick="onClickNovoLocal"
+            android:text="+ Novo Local"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btn_eventos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5B1AC3"
+            android:onClick="onClickEventos"
+            android:text="Voltar Eventos"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listView_locais"
         android:layout_width="match_parent"
         android:layout_height="398dp" />
 
-    <Button
-        android:id="@+id/btn_novo_local"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5B1AC3"
-        android:onClick="onClickNovoLocal"
-        android:text="+ Novo Local"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/btn_eventos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5B1AC3"
-        android:onClick="onClickEventos"
-        android:text="Eventos"
-        android:textColor="#FFFFFF" />
 </LinearLayout>

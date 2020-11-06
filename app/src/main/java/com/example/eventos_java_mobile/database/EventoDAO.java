@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EventoDAO {
 
-    private final String SQL_LISTAR_TODOS_EVENTOS = "SELECT * FROM " + EventoEntity.TABLE_NAME +
+    private final String SQL_LISTAR_TODOS_EVENTOS = "SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " + EventoEntity.TABLE_NAME +
             " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
             " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID;
     private DBGateway dbGateway;
@@ -60,12 +60,12 @@ public class EventoDAO {
             String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
             int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
 
-
             Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
             eventos.add(new Evento(id, nome, data, local));
         }
         cursor.close();
         return eventos;
     }
+
 
 }

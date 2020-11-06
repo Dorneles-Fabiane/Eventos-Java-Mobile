@@ -71,10 +71,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
     public void onClickExcluirEvento(View v) {
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
-
-        //Local local = (Local) spinnerLocais.getSelectedItem();
-        int posicaoLocal = spinnerLocais.getSelectedItemPosition();
-        Local local = (Local) locaisAdapter.getItem(posicaoLocal);
+        Local local = (Local) spinnerLocais.getSelectedItem();
 
         Evento evento = new Evento(id, nome, data, local);
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
@@ -96,37 +93,24 @@ public class CadastroEventoActivity extends AppCompatActivity {
         String nome = editTextNome.getText().toString();
         String data = editTextData.getText().toString();
 
-        //Local local = (Local) spinnerLocais.getSelectedItem();
-        int posicaoLocal = spinnerLocais.getSelectedItemPosition();
-        Local local = (Local) locaisAdapter.getItem(posicaoLocal);
+        Local local = (Local) spinnerLocais.getSelectedItem();
 
         //VALIDAÇÃO DE CAMPOS EVENTO:
 
-        if (nome.isEmpty() ) {
-            editTextNome.setError("* É preciso informar o nome");
-            editTextNome.requestFocus();
-            return;
-        }
+        if (!nome.isEmpty() && !data.isEmpty() && local != null) {
+            Evento evento = new Evento(id, nome, data, local);
+            EventoDAO eventoDAO = new EventoDAO(getBaseContext());
+            boolean salvou = eventoDAO.salvar(evento);
 
+            if (salvou) {
+                Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso!", Toast.LENGTH_LONG).show();
+                finish();
 
-        if (data.isEmpty() ) {
-            editTextData.setError("* É preciso informar a data");
-            editTextData.requestFocus();
-            return;
-        }
-
-
-        Evento evento = new Evento(id,nome, data, local);
-        EventoDAO eventoDAO = new EventoDAO(getBaseContext());
-        boolean salvou = eventoDAO.salvar(evento);
-
-        if (salvou) {
-            Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso!", Toast.LENGTH_LONG).show();
-            finish();
-
+            } else {
+                Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroEventoActivity.this, "É preciso informar todos os campos!", Toast.LENGTH_LONG).show();
         }
     }
-
 }

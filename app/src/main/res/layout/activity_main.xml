@@ -43,31 +43,37 @@
         android:layout_height="wrap_content"
         android:text="Pesquisar" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_novo_evento"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5B1AC3"
+            android:fontFamily="sans-serif-black"
+            android:onClick="onClickNovoEvento"
+            android:text="+  novo evento"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btn_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5B1AC3"
+            android:fontFamily="sans-serif-black"
+            android:onClick="onClickLocais"
+            android:text="Locais"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listView_eventos"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginTop="20px" />
 
-    <Button
-        android:id="@+id/btn_novo_evento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5B1AC3"
-        android:fontFamily="sans-serif-black"
-        android:onClick="onClickNovoEvento"
-        android:text="+  novo evento"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/btn_local"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5B1AC3"
-        android:fontFamily="sans-serif-black"
-        android:onClick="onClickLocais"
-        android:text="Locais"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF" />
 </LinearLayout>

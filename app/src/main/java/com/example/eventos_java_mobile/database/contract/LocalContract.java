@@ -11,7 +11,7 @@ public class LocalContract {
                 LocalEntity.TABLE_COLUMN_NAME_DESCRICAO + " TEXT," +
                 LocalEntity.TABLE_COLUMN_NAME_BAIRRO + " TEXT," +
                 LocalEntity.TABLE_COLUMN_NAME_CIDADE + " TEXT," +
-                LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO + " INT)";
+                LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO + " INTEGER)";
     }
 
     public static final String removerTabelaLocal() {

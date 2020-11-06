@@ -73,47 +73,27 @@ public class CadastroLocalActivity extends AppCompatActivity {
         String descricao = editTextDescricao.getText().toString();
         String bairro = editTextBairro.getText().toString();
         String cidade = editTextCidade.getText().toString();
-        int capacidaPublico = Integer.parseInt(editTextCapacidadePublico.getText().toString());
+        String capacidadeString = editTextCapacidadePublico.getText().toString();
 
+        //VALIDAÇÃO DE CAMPOS LOCAL:
 
-        // VALIDAÇÃO DE CAMPOS LOCAL:
+        if (!descricao.isEmpty() && !bairro.isEmpty() && !cidade.isEmpty() && !capacidadeString.isEmpty()) {
+            int capacidade = Integer.valueOf(capacidadeString);
+            Local local = new Local(id, descricao, bairro, cidade, capacidade);
+            LocalDAO localDAO = new LocalDAO(getBaseContext());
 
-        if (descricao.isEmpty()){
-            editTextDescricao.setError("* É preciso informar o nome");
-            editTextDescricao.requestFocus();
-            return;
+            boolean salvou = localDAO.salvarLocal(local);
+
+            if (salvou) {
+                Toast.makeText(CadastroLocalActivity.this, "Local salvo com sucesso!", Toast.LENGTH_LONG).show();
+                finish();
+
+            } else {
+                Toast.makeText(CadastroLocalActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            Toast.makeText(CadastroLocalActivity.this, "É preciso informar todos os campos!", Toast.LENGTH_LONG).show();
         }
-
-        if (bairro.isEmpty()){
-            editTextBairro.setError("* É preciso informar um Bairro");
-            editTextBairro.requestFocus();
-            return;
-        }
-
-        if (cidade.isEmpty()){
-            editTextCidade.setError("* É preciso informar uma Cidade");
-            editTextCidade.requestFocus();
-            return;
-        }
-
-        if (capacidaPublico < 0 || capacidaPublico == 0){
-            editTextCapacidadePublico.setError("* É preciso informar uma capacidade valida");
-            editTextCapacidadePublico.requestFocus();
-            return;
-        }
-
-        Local local = new Local(id, descricao, bairro, cidade, capacidaPublico);
-        LocalDAO localDAO = new LocalDAO(getBaseContext());
-
-        boolean salvou = localDAO.salvarLocal(local);
-
-        if (salvou) {
-            Toast.makeText(CadastroLocalActivity.this, "Local salvo com sucesso!", Toast.LENGTH_LONG).show();
-            finish();
-
-        } else {
-            Toast.makeText(CadastroLocalActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
-        }
-
     }
 }

@@ -57,7 +57,7 @@ public class LocalDAO {
             String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
             String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
             int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
-            locais.add(new Local(id, descricao, bairro, cidade, capacidadePublico));
+            locais.add(new Local(id, descricao, bairro, cidade, capacidadePublico)); //
         }
         cursor.close();
         return locais;
