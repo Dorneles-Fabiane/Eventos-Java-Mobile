@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.eventos_java_mobile.database.contract.EventoContract;
 import com.example.eventos_java_mobile.database.contract.LocalContract;
 
+
 //*************//
 // Classe feita para ajudar a criar o Banco de Dados, fazer Updates e abrir as conexões com o banco para escritas e leituras.
 //*************//
@@ -36,11 +37,8 @@ public class DatabaseDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(EventoContract.removerTabelaEvento());
         db.execSQL(LocalContract.removerTabelaLocal());
-        db.execSQL(LocalContract.criarTabelaLocal());
-        db.execSQL(EventoContract.criarTabelaEvento());
-
-
-        //onCreate(db);
+        onCreate(db);
         //Ao fazer o Update é melhor chamar as funções de ALTER TABLE, a maneira atual remove toda a tabela.
     }
+
 }

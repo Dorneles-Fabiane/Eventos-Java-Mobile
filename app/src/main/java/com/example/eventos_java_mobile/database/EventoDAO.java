@@ -3,6 +3,7 @@ package com.example.eventos_java_mobile.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.example.eventos_java_mobile.database.entity.EventoEntity;
 import com.example.eventos_java_mobile.database.entity.LocalEntity;
@@ -29,9 +30,9 @@ public class EventoDAO {
         contentValues.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
         contentValues.put(EventoEntity.COLUMN_NAME_ID_LOCAL, evento.getLocal().getId());
 
-        if (evento.getId() > 0 ){
+        if (evento.getId() > 0) {
             return dbGateway.getDatabase().update(EventoEntity.TABLE_NAME, contentValues, EventoEntity._ID + "=?",
-                    new String[] {String.valueOf(evento.getId())}) > 0;
+                    new String[]{String.valueOf(evento.getId())}) > 0;
         }
         return dbGateway.getDatabase().insert(EventoEntity.TABLE_NAME, null, contentValues) > 0;
     }
@@ -50,7 +51,7 @@ public class EventoDAO {
     public List<Evento> listar() {
         List<Evento> eventos = new ArrayList<>();
         Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS_EVENTOS, null);
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
             String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_NOME));
             String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_DATA));
@@ -66,6 +67,4 @@ public class EventoDAO {
         cursor.close();
         return eventos;
     }
-
-
 }

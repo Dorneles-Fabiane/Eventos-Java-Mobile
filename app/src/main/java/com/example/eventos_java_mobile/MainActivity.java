@@ -1,32 +1,29 @@
 package com.example.eventos_java_mobile;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.example.eventos_java_mobile.database.DBGateway;
+import com.example.eventos_java_mobile.database.DatabaseDBHelper;
 import com.example.eventos_java_mobile.database.EventoDAO;
+import com.example.eventos_java_mobile.database.entity.EventoEntity;
 import com.example.eventos_java_mobile.modelo.Evento;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewEventos;
     private ArrayAdapter<Evento> adapterEventos;
-    private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,36 +32,54 @@ public class MainActivity extends AppCompatActivity {
         setTitle("PRÓXIMOS EVENTOS");
         listViewEventos = findViewById(R.id.listView_eventos);
         definirOnClickListenerListView();
-        Intent intent = getIntent();
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @Override protected void onResume() {
         super.onResume();
 
         EventoDAO eventoDAO = new EventoDAO(getBaseContext());
-        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
+        adapterEventos = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 eventoDAO.listar());
         listViewEventos.setAdapter(adapterEventos);
 
         definirOnClickListenerListView();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        final EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-        return true;
+        MenuItem myActionMenuItem = menu.findItem(R.id.search);
+
+        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                newText = newText.toLowerCase();
+                ArrayList<Evento> novaLista = new ArrayList<>();
+                List<Evento> novaLista2 = eventoDAO.listar();
+                for (Evento evento : novaLista2) {
+                    String nome = evento.getNome().toLowerCase();
+                    if(nome.contains(newText)){
+                        novaLista.add(evento);
+                    }
+                }
+                adapterEventos = new ArrayAdapter<>(MainActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        novaLista);
+                listViewEventos.setAdapter(adapterEventos);
+                return true;
+            }
+
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     //FUNÇÃO PARA O LISTVIEW DEFINIR ONCLICK
@@ -91,5 +106,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 
 }
