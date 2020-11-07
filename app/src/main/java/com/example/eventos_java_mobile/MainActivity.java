@@ -20,11 +20,13 @@ import com.example.eventos_java_mobile.database.DatabaseDBHelper;
 import com.example.eventos_java_mobile.database.EventoDAO;
 import com.example.eventos_java_mobile.database.entity.EventoEntity;
 import com.example.eventos_java_mobile.modelo.Evento;
+import com.example.eventos_java_mobile.modelo.Local;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewEventos;
     private ArrayAdapter<Evento> adapterEventos;
+    private EventoDAO eventoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
         setTitle("PRÓXIMOS EVENTOS");
         listViewEventos = findViewById(R.id.listView_eventos);
         definirOnClickListenerListView();
+        eventoDAO = new EventoDAO(getBaseContext());
     }
 
     @Override protected void onResume() {
         super.onResume();
 
-        EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         adapterEventos = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 eventoDAO.listar());
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        final EventoDAO eventoDAO = new EventoDAO(getBaseContext());
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem pesquisarEvento = menu.findItem(R.id.search);
@@ -108,11 +109,14 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onClickPesquisarCidade() {
-        //metodo a ser implementado em EventoDAO
-        //SQL = "Select nome from " + EventoEntity.TABLE_NAME + " WHERE ""
+    public void onClickPesquisarCidade(View v) {
+        EditText et_pesquisarCidade = findViewById(R.id.editText_pesquisaCidade);
+        String cidade = et_pesquisarCidade.getText().toString().toLowerCase();
+
+        //eventoDAO.pesquisarCidade(cidade);//metodo a ser implementado em EventoDAO
+        adapterEventos = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                eventoDAO.pesquisarCidade(cidade));
+        listViewEventos.setAdapter(adapterEventos);
     }
-
-
-
 }
