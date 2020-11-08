@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Switch;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override protected void onResume() {
         super.onResume();
 
+        eventoDAO = new EventoDAO(getBaseContext());
         adapterEventos = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 eventoDAO.listar());
@@ -59,25 +63,19 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // TODO Auto-generated method stub
                 return false;
             }
             //Verifica mudança de texto quando usuario pesquisa
             @Override
-            public boolean onQueryTextChange(String newText) {
-                newText = newText.toLowerCase(); //Transforma a letra/palavra digitada em LC
-                ArrayList<Evento> novaLista = new ArrayList<>();//lista que vai exibir os resultados
+            public boolean onQueryTextChange(String pesquisa) {
+                pesquisa = pesquisa.toLowerCase(); //Transforma a letra/palavra digitada em LC
 
-                List<Evento> eventos = eventoDAO.listar();//verificação dos eventos cadastrados no banco
-                for (Evento evento : eventos) {
-                    String nome = evento.getNome().toLowerCase();
-                    if(nome.contains(newText)){
-                        novaLista.add(evento);
-                    }
-                    adapterEventos = new ArrayAdapter<>(MainActivity.this,
-                            android.R.layout.simple_list_item_1,
-                            novaLista);
-                    listViewEventos.setAdapter(adapterEventos);
-                }
+                adapterEventos = new ArrayAdapter<>(MainActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        eventoDAO.pesquisarEvento(pesquisa));
+                listViewEventos.setAdapter(adapterEventos);
+
                 return true;
             }
         });
@@ -113,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
         EditText et_pesquisarCidade = findViewById(R.id.editText_pesquisaCidade);
         String cidade = et_pesquisarCidade.getText().toString().toLowerCase();
 
-        //eventoDAO.pesquisarCidade(cidade);//metodo a ser implementado em EventoDAO
         adapterEventos = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 eventoDAO.pesquisarCidade(cidade));
         listViewEventos.setAdapter(adapterEventos);
     }
+
 }

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Eventos</string>
     <string name="search_hint">Pesquisar Evento</string>
+    <string name="textOff">Crescente</string>
+    <string name="textOn">Decrescente</string>
 </resources>

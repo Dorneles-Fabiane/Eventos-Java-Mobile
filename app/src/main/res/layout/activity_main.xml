@@ -7,6 +7,15 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="20px"
+        android:text="Ordenação" />
+
     <TextView
         android:id="@+id/textView_pesquisaCidade"
         android:layout_width="match_parent"
@@ -17,32 +26,32 @@
         android:text="Pesquisa Cidade"
         android:textStyle="bold" />
 
-    <Switch
-        android:id="@+id/switch1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginTop="20px"
-        android:layout_marginRight="20px"
-        android:text="Ordenação decrescente" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editText_pesquisaCidade"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginTop="20px"
-        android:layout_marginRight="20px"
-        android:ems="10"
-        android:hint="Digite o nome da cidade"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/editText_pesquisaCidade"
+            android:layout_width="335dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_marginTop="20px"
+            android:layout_marginRight="20px"
+            android:ems="10"
+            android:hint="Digite o nome da cidade"
+            android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickPesquisarCidade"
-        android:text="Pesquisar" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00F8F8F8"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:onClick="onClickPesquisarCidade"
+            android:textAlignment="viewStart"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,7 +83,7 @@
     <ListView
         android:id="@+id/listView_eventos"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="377dp"
         android:layout_marginTop="20px" />
 
 </LinearLayout>

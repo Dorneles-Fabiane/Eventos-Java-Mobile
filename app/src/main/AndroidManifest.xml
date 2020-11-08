@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        android:windowSoftInputMode="stateHidden"
         <activity android:name=".CadastroLocalActivity"></activity>
         <activity android:name=".ListarLocaisActivity" />
         <activity android:name=".CadastroEventoActivity" />
