@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,15 +31,19 @@ public class MainActivity extends AppCompatActivity {
     private ListView listViewEventos;
     private ArrayAdapter<Evento> adapterEventos;
     private EventoDAO eventoDAO;
+    private Switch ordenar;
+    private String ordem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("PRÓXIMOS EVENTOS");
-        listViewEventos = findViewById(R.id.listView_eventos);
-        definirOnClickListenerListView();
+
         eventoDAO = new EventoDAO(getBaseContext());
+        listViewEventos = findViewById(R.id.listView_eventos);
+        ordenar = (Switch)findViewById(R.id.ordenar);
+        definirOnClickListenerListView();
     }
 
     @Override protected void onResume() {
@@ -53,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
         definirOnClickListenerListView();
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem pesquisarEvento = menu.findItem(R.id.search);
+
 
         SearchView searchView = (SearchView) pesquisarEvento.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -70,10 +78,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String pesquisa) {
                 pesquisa = pesquisa.toLowerCase(); //Transforma a letra/palavra digitada em LC
+                String str1;
+                if (ordenar.isChecked()) {
+                    str1 = ordenar.getTextOn().toString();
+                } else {
+                    str1 = ordenar.getTextOff().toString();
+                }
 
                 adapterEventos = new ArrayAdapter<>(MainActivity.this,
                         android.R.layout.simple_list_item_1,
-                        eventoDAO.pesquisarEvento(pesquisa));
+                        eventoDAO.pesquisarEvento(pesquisa, str1));
                 listViewEventos.setAdapter(adapterEventos);
 
                 return true;
@@ -95,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void onClickNovoEvento(View v) {
         Intent intent = new Intent(MainActivity.this, CadastroEventoActivity.class);
         startActivity(intent);
@@ -111,10 +124,21 @@ public class MainActivity extends AppCompatActivity {
         EditText et_pesquisarCidade = findViewById(R.id.editText_pesquisaCidade);
         String cidade = et_pesquisarCidade.getText().toString().toLowerCase();
 
+        ordem = verificaOrdem();
+
         adapterEventos = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
-                eventoDAO.pesquisarCidade(cidade));
+                eventoDAO.pesquisarCidade(cidade, ordem));
         listViewEventos.setAdapter(adapterEventos);
     }
 
+    public String verificaOrdem() {
+        String str1;
+        if (ordenar.isChecked()) {
+            str1 = ordenar.getTextOn().toString();
+        } else {
+            str1 = ordenar.getTextOff().toString();
+        }
+        return  str1;
+    }
 }

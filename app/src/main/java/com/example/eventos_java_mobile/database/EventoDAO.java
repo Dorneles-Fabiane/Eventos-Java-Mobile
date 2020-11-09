@@ -4,7 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
+import com.example.eventos_java_mobile.MainActivity;
+import com.example.eventos_java_mobile.R;
 import com.example.eventos_java_mobile.database.entity.EventoEntity;
 import com.example.eventos_java_mobile.database.entity.LocalEntity;
 import com.example.eventos_java_mobile.modelo.Evento;
@@ -20,6 +24,7 @@ public class EventoDAO {
             " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID;
     private DBGateway dbGateway;
     private Cursor cursor;
+    private String ordenacao;
 
     public EventoDAO(Context context) {
         dbGateway = DBGateway.getInstance(context);
@@ -69,11 +74,11 @@ public class EventoDAO {
         return eventos;
     }
 
-    public List<Evento> pesquisarCidade(String pesquisa) {
+    public List<Evento> pesquisarCidade(String pesquisa, String ordem) {
         List<Evento> eventos = new ArrayList<>();
         cursor = dbGateway.getDatabase().rawQuery("SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " + EventoEntity.TABLE_NAME +
                 " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
-                " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID + " WHERE cidade LIKE '%" + pesquisa + "%'", null);
+                " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID + " WHERE cidade LIKE '%" + pesquisa + "%'" + " ORDER BY nome " + ordem, null);
 
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
@@ -87,16 +92,16 @@ public class EventoDAO {
 
             Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
             eventos.add(new Evento(id, nome, data, local));
-
         }
         cursor.close();
         return eventos;
     }
-    public List<Evento> pesquisarEvento(String pesquisa) {
+    public List<Evento> pesquisarEvento(String pesquisa, String ordem) {
         List<Evento> eventos = new ArrayList<>();
+
         cursor = dbGateway.getDatabase().rawQuery("SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " +
                 EventoEntity.TABLE_NAME + " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
-                " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID + " WHERE nome LIKE '%" + pesquisa + "%'" + "ORDER BY nome ASC", null);
+                " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID + " WHERE nome LIKE '%" + pesquisa + "%'" + " ORDER BY nome " + ordem, null);
 
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
@@ -110,9 +115,9 @@ public class EventoDAO {
 
             Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
             eventos.add(new Evento(id, nome, data, local));
-
         }
         cursor.close();
+
         return eventos;
     }
 }
