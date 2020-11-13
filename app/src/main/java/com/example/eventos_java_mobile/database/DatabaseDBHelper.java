@@ -9,15 +9,14 @@ import androidx.annotation.Nullable;
 import com.example.eventos_java_mobile.database.contract.EventoContract;
 import com.example.eventos_java_mobile.database.contract.LocalContract;
 
-
 //*************//
 // Classe feita para ajudar a criar o Banco de Dados, fazer Updates e abrir as conexões com o banco para escritas e leituras.
 //*************//
 
 public class DatabaseDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "db.appSenaiV10";
-    private static final int DATABASE_VERSION = 1; //Sempre que atualizar o banco, tem que mudar a versão.
+    private static final String DATABASE_NAME = "db.appSenai";
+    private static final int DATABASE_VERSION = 3; //Sempre que atualizar o banco, tem que mudar a versão.
 
     //Inicia o processo de conexão com o banco. Se não achar BD ele criará com o onCreate.
     public DatabaseDBHelper(@Nullable Context context) {

@@ -3,12 +3,7 @@ package com.example.eventos_java_mobile.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 
-import com.example.eventos_java_mobile.MainActivity;
-import com.example.eventos_java_mobile.R;
 import com.example.eventos_java_mobile.database.entity.EventoEntity;
 import com.example.eventos_java_mobile.database.entity.LocalEntity;
 import com.example.eventos_java_mobile.modelo.Evento;
@@ -23,8 +18,6 @@ public class EventoDAO {
             " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
             " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID;
     private DBGateway dbGateway;
-    private Cursor cursor;
-    private String ordenacao;
 
     public EventoDAO(Context context) {
         dbGateway = DBGateway.getInstance(context);
@@ -56,68 +49,49 @@ public class EventoDAO {
 
     public List<Evento> listar() {
         List<Evento> eventos = new ArrayList<>();
-        cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS_EVENTOS, null);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
-            String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_NOME));
-            String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_DATA));
-            int idLocal = cursor.getInt(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_ID_LOCAL));
-            String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO));
-            String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
-            String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
-            int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
+        Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS_EVENTOS, null);
 
-            Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
-            eventos.add(new Evento(id, nome, data, local));
-        }
-        cursor.close();
+        whileCursor(cursor, eventos);
+
         return eventos;
     }
 
     public List<Evento> pesquisarCidade(String pesquisa, String ordem) {
         List<Evento> eventos = new ArrayList<>();
-        cursor = dbGateway.getDatabase().rawQuery("SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " + EventoEntity.TABLE_NAME +
+        Cursor cursor = dbGateway.getDatabase().rawQuery("SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " + EventoEntity.TABLE_NAME +
                 " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
                 " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID + " WHERE cidade LIKE '%" + pesquisa + "%'" + " ORDER BY nome " + ordem, null);
 
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
-            String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_NOME));
-            String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_DATA));
-            int idLocal = cursor.getInt(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_ID_LOCAL));
-            String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO));
-            String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
-            String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
-            int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
+        whileCursor(cursor, eventos);
 
-            Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
-            eventos.add(new Evento(id, nome, data, local));
-        }
-        cursor.close();
         return eventos;
     }
     public List<Evento> pesquisarEvento(String pesquisa, String ordem) {
         List<Evento> eventos = new ArrayList<>();
 
-        cursor = dbGateway.getDatabase().rawQuery("SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " +
+        Cursor cursor = dbGateway.getDatabase().rawQuery("SELECT eventos._id, nome, data, idlocal, descricao, bairro, cidade, capacidadePublico FROM " +
                 EventoEntity.TABLE_NAME + " INNER JOIN " + LocalEntity.TABLE_NAME + " ON " + EventoEntity.COLUMN_NAME_ID_LOCAL +
                 " = " + LocalEntity.TABLE_NAME + "." + LocalEntity._ID + " WHERE nome LIKE '%" + pesquisa + "%'" + " ORDER BY nome " + ordem, null);
 
+        whileCursor(cursor, eventos);
+
+        return eventos;
+    }
+
+    private void whileCursor(Cursor cursor, List eventos) {
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
             String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_NOME));
             String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_DATA));
             int idLocal = cursor.getInt(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_ID_LOCAL));
-            String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_DESCRICAO));
-            String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_BAIRRO));
-            String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CIDADE));
-            int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.TABLE_COLUMN_NAME_CAPACIDADE_PUBLICO));
+            String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.COLUMN_NAME_DESCRICAO));
+            String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.COLUMN_NAME_BAIRRO));
+            String cidade = cursor.getString(cursor.getColumnIndex(LocalEntity.COLUMN_NAME_CIDADE));
+            int capacidadePublico = cursor.getInt(cursor.getColumnIndex(LocalEntity.COLUMN_NAME_CAPACIDADE_PUBLICO));
 
             Local local = new Local(idLocal, descricao, bairro, cidade, capacidadePublico);
             eventos.add(new Evento(id, nome, data, local));
         }
         cursor.close();
-
-        return eventos;
     }
 }

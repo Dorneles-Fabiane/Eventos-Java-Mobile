@@ -42,52 +42,43 @@ public class MainActivity extends AppCompatActivity {
 
         eventoDAO = new EventoDAO(getBaseContext());
         listViewEventos = findViewById(R.id.listView_eventos);
-        ordenar = (Switch)findViewById(R.id.ordenar);
+        ordenar = findViewById(R.id.ordenar);
         definirOnClickListenerListView();
     }
 
     @Override protected void onResume() {
         super.onResume();
-
         eventoDAO = new EventoDAO(getBaseContext());
         adapterEventos = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 eventoDAO.listar());
+
         listViewEventos.setAdapter(adapterEventos);
 
         definirOnClickListenerListView();
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem pesquisarEvento = menu.findItem(R.id.search);
-
-
         SearchView searchView = (SearchView) pesquisarEvento.getActionView();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // TODO Auto-generated method stub
                 return false;
             }
-            //Verifica mudança de texto quando usuario pesquisa
             @Override
-            public boolean onQueryTextChange(String pesquisa) {
-                pesquisa = pesquisa.toLowerCase(); //Transforma a letra/palavra digitada em LC
-                String str1;
-                if (ordenar.isChecked()) {
-                    str1 = ordenar.getTextOn().toString();
-                } else {
-                    str1 = ordenar.getTextOff().toString();
-                }
+            public boolean onQueryTextChange(String evento) {
+                evento = evento.toLowerCase();
+                ordem = verificaOrdem();
 
                 adapterEventos = new ArrayAdapter<>(MainActivity.this,
                         android.R.layout.simple_list_item_1,
-                        eventoDAO.pesquisarEvento(pesquisa, str1));
+                        eventoDAO.pesquisarEvento(evento, ordem));
                 listViewEventos.setAdapter(adapterEventos);
 
                 return true;
@@ -132,13 +123,14 @@ public class MainActivity extends AppCompatActivity {
         listViewEventos.setAdapter(adapterEventos);
     }
 
+    //Verifica o estado do botão Switch e inicializa a String com o valor contido no xml 'Activity Main'
     public String verificaOrdem() {
-        String str1;
+        String onOff;
         if (ordenar.isChecked()) {
-            str1 = ordenar.getTextOn().toString();
+            onOff = ordenar.getTextOn().toString();
         } else {
-            str1 = ordenar.getTextOff().toString();
+            onOff = ordenar.getTextOff().toString();
         }
-        return  str1;
+        return  onOff;
     }
 }

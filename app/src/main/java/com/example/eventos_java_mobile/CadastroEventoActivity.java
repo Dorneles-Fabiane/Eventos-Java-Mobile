@@ -96,7 +96,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
         Local local = (Local) spinnerLocais.getSelectedItem();
 
         //VALIDAÇÃO DE CAMPOS EVENTO:
-
         if (!nome.isEmpty() && !data.isEmpty() && local != null) {
             Evento evento = new Evento(id, nome, data, local);
             EventoDAO eventoDAO = new EventoDAO(getBaseContext());
