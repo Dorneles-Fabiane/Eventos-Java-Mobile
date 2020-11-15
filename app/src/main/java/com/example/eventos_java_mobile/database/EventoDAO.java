@@ -83,6 +83,7 @@ public class EventoDAO {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
             String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_NOME));
             String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_DATA));
+
             int idLocal = cursor.getInt(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_ID_LOCAL));
             String descricao = cursor.getString(cursor.getColumnIndex(LocalEntity.COLUMN_NAME_DESCRICAO));
             String bairro = cursor.getString(cursor.getColumnIndex(LocalEntity.COLUMN_NAME_BAIRRO));
